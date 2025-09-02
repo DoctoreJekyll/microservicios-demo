@@ -17,6 +17,8 @@
         <module>restful-demo-dyd</module>
         <module>job-services</module>
         <module>player-services</module>
+        <module>auth-services</module>
+        <module>api-gateway</module>
         <!-- Más adelante añadiremos: job-service, appuser-service, gateway -->
     </modules>
 

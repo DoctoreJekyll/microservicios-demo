@@ -2,15 +2,26 @@ server:
   port: 8080  # el puerto donde escuchará el Gateway
 
 spring:
-  application:
-    name: api-gateway
   cloud:
     gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
       routes:
-        - id: job-service
-          uri: lb://job-service
+        - id: job-services
+          uri: lb://job-services
           predicates:
             - Path=/api/jobs/**
+
+        - id: player-services
+          uri: lb://player-services
+          predicates:
+            - Path=/api/players/**
+
+
+
+
 
 
 eureka:
