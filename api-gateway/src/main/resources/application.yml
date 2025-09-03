@@ -1,7 +1,9 @@
 server:
-  port: 8080  # el puerto donde escuchará el Gateway
+  port: 8080
 
 spring:
+  application:
+    name: api-gateway
   cloud:
     gateway:
       discovery:
@@ -9,22 +11,25 @@ spring:
           enabled: true
           lower-case-service-id: true
       routes:
+        - id: auth-services
+          uri: lb://auth-services
+          predicates:
+            - Path=/api/auth/**
         - id: job-services
           uri: lb://job-services
           predicates:
             - Path=/api/jobs/**
-
         - id: player-services
           uri: lb://player-services
           predicates:
             - Path=/api/players/**
-
-
-
-
-
-
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
+
+# Demo: el Gateway valida el JWT con el mismo secreto que auth-service
+app:
+  security:
+    jwt:
+      secret: pIGTKr9WkI1YlaYNGOB1tBJWT9s0PWu0kCf2AvUetTEmoSaQfMBYdm7PL2X5uRV0
